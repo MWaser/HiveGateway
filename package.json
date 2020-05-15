@@ -1,0 +1,28 @@
+{
+    "name": "hive-gateway",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "build": "tsc --build",
+        "clean": "tsc --build --clean",
+        "start": "node app"
+    },
+    "description": "HiveGateway",
+    "author": {
+        "name": "Mark Waser"
+    },
+    "dependencies": {
+        "@hiveio/hive-js": "^0.1.0",
+        "express": "^4.14.0",
+        "steem": "^0.7.11",
+        "web3": "^1.2.7"
+    },
+    "devDependencies": {
+        "@types/express": "^4.0.37",
+        "@types/node": "^13.13.5",
+        "typescript": "^3.8.3"
+    },
+    "engines": {
+        "node": "^8.9.4"
+    }
+}
