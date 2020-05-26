@@ -15,6 +15,7 @@
         "@hiveio/hive-js": "^0.1.0",
         "express": "^4.14.0",
         "steem": "^0.7.11",
+        "tedious": "^8.3.0",
         "web3": "^1.2.7"
     },
     "devDependencies": {

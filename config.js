@@ -16,7 +16,7 @@ module.exports = {
     addrGBBP: 'http://etht5zt7j-dns-reg1.eastus2.cloudapp.azure.com:8540',
     wsGBBP: 'ws://etht5zt7j-dns-reg1-0.eastus2.cloudapp.azure.com:8547',
     bothLocal: 'ws://localhost:8545',
-    addrCurr: '',
+    addrCurr: 'http://etht5zt7j-dns-reg1.eastus2.cloudapp.azure.com:8540',
     address: process.env.address || '0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e',
     privateKey: process.env.privateKey || 'b0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773',
     dbConn: process.env.dbConn ? JSON.parse(process.env.dbConn) : {

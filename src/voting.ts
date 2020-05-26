@@ -1,3 +1,5 @@
+import { logAdd, replaceErrors } from './utilities'
+
 class Article { constructor(public author: string, public identifier: string, public created: number, public vote: number) { } }
 class Blockchain { constructor(public name: string, public api, public articles: Article[]) { } }
 class Voter { constructor(public name: string, public wif: string) { } }
@@ -17,7 +19,7 @@ voters.push(new Voter("zero.state", "kpZEnqXt171oo5NSMhBbA9M9TRswaKHr"));
 voters.push(new Voter("ellepdub", "5JuAvBsdDVBE4XwdmHXWkJnMBQvKxcSRnTZb1p65CKTuAUZiiLk"));
 
 export default function vote(bchain, author: string, identifier: string, weight: number) {
-    console.log("starting voting");
+    logAdd("Hive Gateway", 4, "Voting on " + author + " / " + identifier);
     for (let voter of voters) {
         console.log(voter.name + " voting");
         // steem.broadcast.vote(voter.wif, voter.name, author, identifier, weight, function (err, result) {

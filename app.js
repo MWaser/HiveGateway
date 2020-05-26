@@ -13,7 +13,12 @@ const config = require('./config');
 const express = require("express");
 var app = express();
 global.app = app;
-const srvr = app.listen(process.env.PORT || 3001, function () { console.log('Hive Gateway listening'); });
+const srvr = app.listen(process.env.PORT || 3001, function () { console.log('Hive/Steem Gateway watching'); });
+const express4tediousX_1 = require("./express4tediousX");
+app.set('te', express4tediousX_1.default(config.dbConn));
+const utilities_1 = require("./src/utilities");
+// The Hive/Steem gateway does more than just transferring tokens with hsHandler()
+// It also votes for GBA members who blog on Hive or Steem with queueArticles()
 class Article {
     constructor(author, identifier, created, vote) {
         this.author = author;
@@ -39,70 +44,68 @@ hive.bc.config.set('alternative_api_endpoints', config.hiveAlts);
 var steem = new Blockchain("steem", require("steem"), new Array(), false);
 app.set('steem', steem);
 steem.bc.api.setOptions({ url: config.steemUrl });
-// import vote from './src/voting';
+// import vote from './src/voting';                                                             // for testing purposes only
 // vote(steem, 'digital-wisdom', 'reducing-timing-luck-and-the-future-of-splinterlands', 1);
 // vote(hive, 'digital-wisdom', 'reducing-timing-luck-and-the-future-of-splinterlands', 1);
-function streamOps(bchain) {
+function streamOps(bChain) {
     try {
-        bchain.bc.api.streamOperations(function (err, result) {
+        bChain.bc.api.streamOperations(function (err, result) {
             try {
-                bchain.flagSO = 1;
+                bChain.flagSO = 1;
                 if (err == null) {
                     if (result[0] == "comment" && result[1].parent_author == "") {
-                        articles_1.queueArticles(bchain, result);
+                        articles_1.queueArticles(bChain, result);
                     }
-                }
-                if (result[0] == "custom_json" && result[1].id == "ssc-mainnet1") {
-                    var acts = JSON.parse(result[1].json);
-                    if (acts.contractName == "tokens" && acts.contractAction == "transfer") {
-                        if (Array.isArray(acts)) {
-                            acts.forEach(act => { hsGateway_1.hsHandler(result[1], act); });
+                    if (result[0] == "custom_json" && result[1].id == "ssc-mainnet1") {
+                        var acts = JSON.parse(result[1].json);
+                        if (acts.contractName == "tokens" && acts.contractAction == "transfer") {
+                            if (Array.isArray(acts)) {
+                                acts.forEach(act => { hsGateway_1.hsHandler(bChain, result[1], act); });
+                            }
+                            else
+                                hsGateway_1.hsHandler(bChain, result[1], acts);
                         }
-                        else
-                            hsGateway_1.hsHandler(result[1], acts);
                     }
                 }
                 else {
-                    console.log(bchain.name + " - Caught Stream ERROR! " + JSON.stringify(err, replaceErrors));
+                    utilities_1.logAdd("Hive Gateway", 4, bChain.name + " - Caught Stream ERROR! " + JSON.stringify(err, utilities_1.replaceErrors));
                     // TODO: Go back and grab block ta errored out and process it
-                    streamOps(bchain);
+                    streamOps(bChain);
                 }
             }
             catch (ex) {
-                console.log(bchain.name + " - UNCAUGHT Stream ERROR! " + JSON.stringify(ex, replaceErrors));
+                utilities_1.logAdd("Hive Gateway", 4, bChain.name + " - UNCAUGHT Stream ERROR! " + JSON.stringify(ex, utilities_1.replaceErrors));
             }
         });
     }
     catch (ex) {
-        console.log(bchain.name + " - Outer StreamOperations ERROR! " + JSON.stringify(ex, replaceErrors));
+        utilities_1.logAdd("Hive Gateway", 4, bChain.name + " - Outer StreamOperations ERROR! " + JSON.stringify(ex, utilities_1.replaceErrors));
     }
 }
 // add eth contract to config.tokens
-hsGateway_1.ethWatcher(config.token['PLAY']);
+// config.tokens.forEach((token) => { initTokenEvents(config.token[token]); ethWatcher(config.token[token]) });
+config.tokens.forEach((token) => hsGateway_1.initTokenEvents(config.token[token])); // ethWatcher temporarily removed for Kludge
 streamOps(hive);
 streamOps(steem);
 setInterval(checkEvents, 60000); // once a minute seems about right
 function checkEvents() {
     return __awaiter(this, void 0, void 0, function* () {
+        utilities_1.logAdd('Hive Gateway', 5, "Checking events");
+        config.tokens.forEach((token) => hsGateway_1.initTokenEvents(config.token[token])); // Kludge due to lack of Azure PoA web sockets
         articles_1.voteArticles(hive);
         if (hive.flagSO)
             hive.flagSO = false;
-        else
+        else {
+            utilities_1.logAdd("Hive Gateway", 3, "Hive Restart");
             streamOps(hive);
+        }
         articles_1.voteArticles(steem);
         if (steem.flagSO)
             steem.flagSO = false;
-        else
+        else {
+            utilities_1.logAdd("Hive Gateway", 3, "Steem Restart");
             streamOps(steem);
+        }
     });
-}
-// debugging utility function; use for console.log(JSON.stringify(error, replaceErrors));
-function replaceErrors(key, value) {
-    if (value instanceof Error) {
-        var error = {};
-        Object.getOwnPropertyNames(value).forEach(function (key) { error[key] = value[key]; });
-        return error;
-    }
-    return value;
 }
 //# sourceMappingURL=app.js.map

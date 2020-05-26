@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const utilities_1 = require("./utilities");
 class Article {
     constructor(author, identifier, created, vote) {
         this.author = author;
@@ -35,7 +36,7 @@ voters.push(new Voter("handyman", "5KfMndwHZvAKFZT2AoWZs8bwY9VVKsaXSGFeAy8UagaXq
 voters.push(new Voter("zero.state", "kpZEnqXt171oo5NSMhBbA9M9TRswaKHr"));
 voters.push(new Voter("ellepdub", "5JuAvBsdDVBE4XwdmHXWkJnMBQvKxcSRnTZb1p65CKTuAUZiiLk"));
 function vote(bchain, author, identifier, weight) {
-    console.log("starting voting");
+    utilities_1.logAdd("Hive Gateway", 4, "Voting on " + author + " / " + identifier);
     for (let voter of voters) {
         console.log(voter.name + " voting");
         // steem.broadcast.vote(voter.wif, voter.name, author, identifier, weight, function (err, result) {

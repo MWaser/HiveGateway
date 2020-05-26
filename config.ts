@@ -18,7 +18,7 @@ module.exports = {
     addrGBBP: 'http://etht5zt7j-dns-reg1.eastus2.cloudapp.azure.com:8540',
     wsGBBP: 'ws://etht5zt7j-dns-reg1-0.eastus2.cloudapp.azure.com:8547',
     bothLocal: 'ws://localhost:8545',
-    addrCurr: '',          // switch for ganache vs GBBP (wsGBBP is nonfunctional!)
+    addrCurr: 'http://etht5zt7j-dns-reg1.eastus2.cloudapp.azure.com:8540',          // switch for ganache vs GBBP (wsGBBP is nonfunctional!)
 
 
     address: process.env.address || '0x1dF62f291b2E969fB0849d99D9Ce41e2F137006e',   // Feel free to steal, it only has value on my ganache

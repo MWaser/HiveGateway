@@ -32,8 +32,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="app.ts" />
-    <None Include="routes\index.ts" />
-    <None Include="routes\user.ts" />
     <Content Include="build\contracts\Context.json" />
     <Content Include="build\contracts\ERC20.json" />
     <Content Include="build\contracts\ERC20Detailed.json" />
@@ -51,9 +49,7 @@
     <Content Include="build\contracts\Roles.json" />
     <Content Include="build\contracts\SafeMath.json" />
     <Content Include="build\contracts\StandaloneERC20.json" />
-    <Content Include="Notes.txt">
-      <SubType>Code</SubType>
-    </Content>
+    <None Include="HiveGateway - Web Deploy.pubxml" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
@@ -64,18 +60,19 @@
     <Folder Include="build\" />
     <Folder Include="build\contracts\" />
     <Folder Include="src\" />
-    <Folder Include="routes\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="config.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="express4tediousX.ts" />
     <TypeScriptCompile Include="src\articles.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\hsGateway.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\utilities.ts" />
     <TypeScriptCompile Include="src\voting.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
