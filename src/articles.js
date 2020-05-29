@@ -31,10 +31,18 @@ authors.push(new Author("morgan.waser", 1));
 authors.push(new Author("davidjkelley", 1));
 authors.push(new Author("technoprogressiv", 1));
 authors.push(new Author("handyman", 1));
-authors.push(new Author("howo", 1)); // ** 173-238; 2/week                  
-authors.push(new Author("netuoso", 1)); // hive; new; 154/0/28/151
-authors.push(new Author("theycallmedan", 1)); // hive; 74/134/53/29
-authors.push(new Author("three", 0.5)); // hive; huge
+authors.push(new Author("andrarchy", 1)); // 
+authors.push(new Author("apshamilton", 1)); // 
+authors.push(new Author("fredrikaa", 1)); // 
+authors.push(new Author("holger80", 1)); // 
+authors.push(new Author("howo", 1)); //                 
+authors.push(new Author("krnel", 1)); // 
+authors.push(new Author("maxigan", 1)); // 
+authors.push(new Author("netuoso", 1)); // 
+authors.push(new Author("themarkymark", 1)); // 
+authors.push(new Author("theycallmedan", 1)); // 
+authors.push(new Author("three", 1)); // 
+authors.push(new Author("threespeak", 1)); //
 authors.push(new Author("anomadsoul", 0.5)); // 5-105; 5/week
 authors.push(new Author("anyx", 1)); // ** rare, high
 authors.push(new Author("brittuf", 1)); // ** 72-100; 3/week  
