@@ -49,7 +49,6 @@
     <Content Include="build\contracts\Roles.json" />
     <Content Include="build\contracts\SafeMath.json" />
     <Content Include="build\contracts\StandaloneERC20.json" />
-    <None Include="HiveGateway - Web Deploy.pubxml" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />

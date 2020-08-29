@@ -1,3 +1,4 @@
+import axios from 'axios';
 declare global { namespace NodeJS { interface Global { app: any; } } }
 const config = require('./config');
 import express = require('express');
@@ -20,13 +21,12 @@ var hive: Blockchain = new Blockchain("hive", require("@hiveio/hive-js"), new Ar
 app.set('hive', hive);
 hive.bc.api.setOptions({ url: config.hiveUrl });
 hive.bc.config.set('alternative_api_endpoints', config.hiveAlts);
-var steem: Blockchain = new Blockchain("steem", require("steem"), new Array<Article>(), false);
-app.set('steem', steem);
-steem.bc.api.setOptions({ url: config.steemUrl });
+//var steem: Blockchain = new Blockchain("steem", require("steem"), new Array<Article>(), false);
+//app.set('steem', steem);
+//steem.bc.api.setOptions({ url: config.steemUrl });
 
-// import vote from './src/voting';                                                             // for testing purposes only
-// vote(steem, 'digital-wisdom', 'reducing-timing-luck-and-the-future-of-splinterlands', 1);
-// vote(hive, 'digital-wisdom', 'reducing-timing-luck-and-the-future-of-splinterlands', 1);
+import vote from './src/voting';                                                             // for testing purposes only
+vote(hive, 'digital-wisdom', 'exode-colonization-exploration-discovery-collecting-and-crafting', 1);
 
 function streamOps(bChain) {
     try {
@@ -57,13 +57,19 @@ function streamOps(bChain) {
 // config.tokens.forEach((token) => { initTokenEvents(config.token[token]); ethWatcher(config.token[token]) });
 config.tokens.forEach((token) => initTokenEvents(config.token[token]));         // ethWatcher temporarily removed for Kludge
 streamOps(hive);
-streamOps(steem);
+// streamOps(steem);
 setInterval(checkEvents, 60000);                                                // once a minute seems about right
 async function checkEvents() {
     logAdd('Hive Gateway', 5, "Checking events");
     config.tokens.forEach((token) => initTokenEvents(config.token[token]));     // Kludge due to lack of Azure PoA web sockets
     voteArticles(hive);
     if (hive.flagSO) hive.flagSO = false; else { logAdd("Hive Gateway", 3, "Hive Restart"); streamOps(hive); }
-    voteArticles(steem);
-    if (steem.flagSO) steem.flagSO = false; else { logAdd("Hive Gateway", 3, "Steem Restart"); streamOps(steem); }
+    //voteArticles(steem);
+    //if (steem.flagSO) steem.flagSO = false; else { logAdd("Hive Gateway", 3, "Steem Restart"); streamOps(steem); }
 }
+
+setInterval(keepAlive, 900000);                                                // every 15 minutes seems about right
+async function keepAlive() {
+    axios.get('https://gbbp-api.azurewebsites.net/');
+}
+
