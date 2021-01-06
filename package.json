@@ -13,7 +13,7 @@
     },
     "dependencies": {
         "@hiveio/hive-js": "^0.1.0",
-        "axios": "^0.19.2",
+        "axios": "^0.21.1",
         "express": "^4.14.0",
         "steem": "^0.7.11",
         "tedious": "^8.3.0",
